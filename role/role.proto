@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package role;
+
+import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/cargod-bj/b2c-staff-api/role";
+
+/*
+  获取角色权限服务
+ */
+service Role {
+  // 添加指定权限到权限列表
+  rpc Add(RoleModel) returns (common.Response) {}
+  // 根据roleId删除权限
+  rpc Delete(RoleDeleteReq) returns (common.Response) {}
+  // 更新指定权限
+  rpc Update(RoleModel) returns (common.Response) {}
+  // 获取基础权限列表
+  rpc GetList(Page) returns (stream RoleModel) {}
+  // 获取指定用户id的用户角色
+  rpc GetUserRole(RoleFindReq) returns (RoleModel) {}
+}
+
+// 角色model
+message RoleModel {
+  // 角色id
+  uint32 id = 1;
+  // 角色名称
+  string name = 2;
+  // 角色创建时间
+  google.protobuf.Timestamp create_time = 100;
+  // 角色最后更新时间
+  google.protobuf.Timestamp update_time = 101;
+}
+
+// 删除指定的角色
+message RoleDeleteReq {
+  // 角色id列表
+  repeated uint32 ids = 1;
+}
+
+// 根据角色id获取角色信息
+message RoleFindReq {
+  // 角色id
+  uint32 id = 1;
+}
+
+// 分页信息
+message Page{
+  uint32 pageNo = 1;
+  uint32 pageSize = 2;
+}
