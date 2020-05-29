@@ -7,6 +7,8 @@ import (
 	fmt "fmt"
 	common "github.com/cargod-bj/b2c-proto-common/common"
 	proto "github.com/golang/protobuf/proto"
+	_ "github.com/golang/protobuf/ptypes/any"
+	_ "github.com/golang/protobuf/ptypes/timestamp"
 	math "math"
 )
 
@@ -43,8 +45,11 @@ func NewStaffEndpoints() []*api.Endpoint {
 // Client API for Staff service
 
 type StaffService interface {
-	Login(ctx context.Context, in *Request, opts ...client.CallOption) (*common.Response, error)
-	Register(ctx context.Context, in *User, opts ...client.CallOption) (*common.Response, error)
+	Login(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
+	Add(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
+	Delete(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
+	Update(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
+	List(ctx context.Context, in *StoreCondition, opts ...client.CallOption) (*common.Response, error)
 }
 
 type staffService struct {
@@ -59,7 +64,7 @@ func NewStaffService(name string, c client.Client) StaffService {
 	}
 }
 
-func (c *staffService) Login(ctx context.Context, in *Request, opts ...client.CallOption) (*common.Response, error) {
+func (c *staffService) Login(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Staff.Login", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -69,8 +74,38 @@ func (c *staffService) Login(ctx context.Context, in *Request, opts ...client.Ca
 	return out, nil
 }
 
-func (c *staffService) Register(ctx context.Context, in *User, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "Staff.Register", in)
+func (c *staffService) Add(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Staff.Add", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staffService) Delete(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Staff.Delete", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staffService) Update(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Staff.update", in)
+	out := new(common.Response)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staffService) List(ctx context.Context, in *StoreCondition, opts ...client.CallOption) (*common.Response, error) {
+	req := c.c.NewRequest(c.name, "Staff.List", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -82,14 +117,20 @@ func (c *staffService) Register(ctx context.Context, in *User, opts ...client.Ca
 // Server API for Staff service
 
 type StaffHandler interface {
-	Login(context.Context, *Request, *common.Response) error
-	Register(context.Context, *User, *common.Response) error
+	Login(context.Context, *StaffDto, *common.Response) error
+	Add(context.Context, *StaffDto, *common.Response) error
+	Delete(context.Context, *StaffDto, *common.Response) error
+	Update(context.Context, *StaffDto, *common.Response) error
+	List(context.Context, *StoreCondition, *common.Response) error
 }
 
 func RegisterStaffHandler(s server.Server, hdlr StaffHandler, opts ...server.HandlerOption) error {
 	type staff interface {
-		Login(ctx context.Context, in *Request, out *common.Response) error
-		Register(ctx context.Context, in *User, out *common.Response) error
+		Login(ctx context.Context, in *StaffDto, out *common.Response) error
+		Add(ctx context.Context, in *StaffDto, out *common.Response) error
+		Delete(ctx context.Context, in *StaffDto, out *common.Response) error
+		Update(ctx context.Context, in *StaffDto, out *common.Response) error
+		List(ctx context.Context, in *StoreCondition, out *common.Response) error
 	}
 	type Staff struct {
 		staff
@@ -102,10 +143,22 @@ type staffHandler struct {
 	StaffHandler
 }
 
-func (h *staffHandler) Login(ctx context.Context, in *Request, out *common.Response) error {
+func (h *staffHandler) Login(ctx context.Context, in *StaffDto, out *common.Response) error {
 	return h.StaffHandler.Login(ctx, in, out)
 }
 
-func (h *staffHandler) Register(ctx context.Context, in *User, out *common.Response) error {
-	return h.StaffHandler.Register(ctx, in, out)
+func (h *staffHandler) Add(ctx context.Context, in *StaffDto, out *common.Response) error {
+	return h.StaffHandler.Add(ctx, in, out)
+}
+
+func (h *staffHandler) Delete(ctx context.Context, in *StaffDto, out *common.Response) error {
+	return h.StaffHandler.Delete(ctx, in, out)
+}
+
+func (h *staffHandler) Update(ctx context.Context, in *StaffDto, out *common.Response) error {
+	return h.StaffHandler.Update(ctx, in, out)
+}
+
+func (h *staffHandler) List(ctx context.Context, in *StoreCondition, out *common.Response) error {
+	return h.StaffHandler.List(ctx, in, out)
 }

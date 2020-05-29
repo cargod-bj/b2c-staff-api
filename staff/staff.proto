@@ -2,27 +2,44 @@ syntax = "proto3";
 package staff;
 
 import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/cargod-bj/b2c-staff-api/staff";
 
 service Staff {
-  rpc Login(Request) returns (common.Response) {}
-  rpc Register(User) returns (common.Response) {}
+  rpc Login(StaffDto) returns (common.Response) {}
+  rpc Add(StaffDto) returns (common.Response) {}
+  rpc Delete(StaffDto) returns (common.Response) {}
+  rpc update(StaffDto) returns (common.Response) {}
+  rpc List(StoreCondition) returns (common.Response) {}
+}
+message StoreCondition{
+  Page page = 1;
 }
 
-
-message User{
-
-  string LoginName = 2;
-  string Email = 3;
-  string Icon = 4;
-  string Password = 5;
-  uint64 Gender = 6;
-  string Birthday = 7;
-  string Telephone = 10;
+message Page{
+  uint32 pageNo = 1;
+  uint32 pageSize = 2;
 }
-message Request {
+
+message StaffDto{
+  uint64 Id = 10;
   string LoginName = 1;
-  string Password = 2;
+  string Email = 2;
+  string Icon = 3;
+  string Password = 4;
+  uint64 Gender = 5;
+  google.protobuf.Timestamp Birthday = 6;
+  string Telephone = 7;
+  google.protobuf.Timestamp CreateTime = 8;
+  google.protobuf.Timestamp UpdateTime = 9;
+  string Token = 11;
 }
 
-
+message PagedList{
+  uint32 pageNo = 1;
+  uint32 pageSize = 2;
+  uint32 total = 3;
+  repeated google.protobuf.Any list = 4;
+}
