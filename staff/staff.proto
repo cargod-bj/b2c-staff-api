@@ -3,7 +3,6 @@ package staff;
 
 import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
 import "google/protobuf/any.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/cargod-bj/b2c-staff-api/staff";
 
@@ -30,10 +29,10 @@ message StaffDto{
   string Icon = 3;
   string Password = 4;
   uint64 Gender = 5;
-  google.protobuf.Timestamp Birthday = 6;
+  uint64 Birthday = 6;
   string Telephone = 7;
-  google.protobuf.Timestamp CreateTime = 8;
-  google.protobuf.Timestamp UpdateTime = 9;
+  uint64 CreateTime = 8;
+  uint64 UpdateTime = 9;
   string Token = 11;
 }
 
