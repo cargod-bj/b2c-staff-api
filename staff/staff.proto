@@ -29,10 +29,10 @@ message StaffDto{
   string Icon = 3;
   string Password = 4;
   uint64 Gender = 5;
-  uint64 Birthday = 6;
+  int64 Birthday = 6;
   string Telephone = 7;
-  uint64 CreateTime = 8;
-  uint64 UpdateTime = 9;
+  int64 CreateTime = 8;
+  int64 UpdateTime = 9;
   string Token = 11;
 }
 
