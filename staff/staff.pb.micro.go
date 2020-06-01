@@ -48,7 +48,7 @@ type StaffService interface {
 	Add(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
 	Delete(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
 	Update(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error)
-	List(ctx context.Context, in *StoreCondition, opts ...client.CallOption) (*common.Response, error)
+	List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
 }
 
 type staffService struct {
@@ -103,7 +103,7 @@ func (c *staffService) Update(ctx context.Context, in *StaffDto, opts ...client.
 	return out, nil
 }
 
-func (c *staffService) List(ctx context.Context, in *StoreCondition, opts ...client.CallOption) (*common.Response, error) {
+func (c *staffService) List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error) {
 	req := c.c.NewRequest(c.name, "Staff.List", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -120,7 +120,7 @@ type StaffHandler interface {
 	Add(context.Context, *StaffDto, *common.Response) error
 	Delete(context.Context, *StaffDto, *common.Response) error
 	Update(context.Context, *StaffDto, *common.Response) error
-	List(context.Context, *StoreCondition, *common.Response) error
+	List(context.Context, *common.Page, *common.Response) error
 }
 
 func RegisterStaffHandler(s server.Server, hdlr StaffHandler, opts ...server.HandlerOption) error {
@@ -129,7 +129,7 @@ func RegisterStaffHandler(s server.Server, hdlr StaffHandler, opts ...server.Han
 		Add(ctx context.Context, in *StaffDto, out *common.Response) error
 		Delete(ctx context.Context, in *StaffDto, out *common.Response) error
 		Update(ctx context.Context, in *StaffDto, out *common.Response) error
-		List(ctx context.Context, in *StoreCondition, out *common.Response) error
+		List(ctx context.Context, in *common.Page, out *common.Response) error
 	}
 	type Staff struct {
 		staff
@@ -158,6 +158,6 @@ func (h *staffHandler) Update(ctx context.Context, in *StaffDto, out *common.Res
 	return h.StaffHandler.Update(ctx, in, out)
 }
 
-func (h *staffHandler) List(ctx context.Context, in *StoreCondition, out *common.Response) error {
+func (h *staffHandler) List(ctx context.Context, in *common.Page, out *common.Response) error {
 	return h.StaffHandler.List(ctx, in, out)
 }

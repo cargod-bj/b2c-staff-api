@@ -11,16 +11,9 @@ service Staff {
   rpc Add(StaffDto) returns (common.Response) {}
   rpc Delete(StaffDto) returns (common.Response) {}
   rpc update(StaffDto) returns (common.Response) {}
-  rpc List(StoreCondition) returns (common.Response) {}
-}
-message StoreCondition{
-  Page page = 1;
+  rpc List(common.Page) returns (common.Response) {}
 }
 
-message Page{
-  uint32 pageNo = 1;
-  uint32 pageSize = 2;
-}
 
 message StaffDto{
   uint64 Id = 10;
