@@ -33,7 +33,6 @@ message StaffDto{
   string Telephone = 7;
   int64 CreateTime = 8;
   int64 UpdateTime = 9;
-  string Token = 11;
 }
 
 message PagedList{
