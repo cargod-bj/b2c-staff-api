@@ -94,7 +94,7 @@ func (c *staffService) Delete(ctx context.Context, in *StaffDto, opts ...client.
 }
 
 func (c *staffService) Update(ctx context.Context, in *StaffDto, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "Staff.update", in)
+	req := c.c.NewRequest(c.name, "Staff.Update", in)
 	out := new(common.Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {

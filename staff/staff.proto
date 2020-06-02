@@ -10,7 +10,7 @@ service Staff {
   rpc Login(StaffDto) returns (common.Response) {}
   rpc Add(StaffDto) returns (common.Response) {}
   rpc Delete(StaffDto) returns (common.Response) {}
-  rpc update(StaffDto) returns (common.Response) {}
+  rpc Update(StaffDto) returns (common.Response) {}
   rpc List(common.Page) returns (common.Response) {}
 }
 
