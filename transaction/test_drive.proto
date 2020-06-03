@@ -1,0 +1,85 @@
+syntax = "proto3";
+package staff;
+
+import "github.com/cargod-bj/b2c-proto-common/common/common.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/cargod-bj/b2c-staff-api/transaction/testDrive";
+
+// 试驾服务
+service TestDrive {
+  // 新增试驾
+  rpc Add(TestDriveAddDto) returns (common.Response) {}
+  // 删除试驾
+  rpc Delete(TestDriveDeleteDto) returns (common.Response) {}
+  // 更新试驾
+  rpc Update(TestDriveUpdateDto) returns (common.Response) {}
+  // 获取试驾列表
+  rpc List(common.Page) returns (common.Response) {}
+}
+
+// 试驾入参对象
+message TestDriveItemDto{
+  uint64 id = 1;
+  // 试驾用户id
+  uint64 user_id = 2;
+  // 试驾员工id
+  uint64 staff_id = 3;
+  // 预约id
+  uint64 appointment_id = 4;
+  // 试驾车辆id
+  uint64 car_id = 5;
+  // 试驾车辆所属store
+  uint64 store_id = 6;
+  // 试驾进行状态
+  uint32 status = 7;
+  // 试驾预约时间
+  uint64 appointment = 8;
+  // 创建时间
+  uint64 create_time = 9;
+  // 更新时间
+  uint64 update_time = 10;
+  // 试驾描述信息
+  string description = 11;
+}
+
+// 试驾入参对象
+message TestDriveDeleteDto{
+  uint64 id = 1;
+}
+
+// 试驾入参对象
+message TestDriveUpdateDto{
+  // 试驾员工id
+  uint64 staff_id = 1;
+  // 试驾车辆id
+  uint64 car_id = 2;
+  // 试驾车辆所属store
+  uint64 store_id = 3;
+  // 试驾进行状态
+  uint32 status = 4;
+  // 试驾预约时间
+  uint64 appointment = 5;
+  // 试驾描述信息
+  string description = 6;
+}
+
+// 试驾入参对象
+message TestDriveAddDto{
+  // 试驾用户id
+  uint64 user_id = 1;
+  // 试驾员工id
+  uint64 staff_id = 2;
+  // 预约id
+  uint64 appointment_id = 3;
+  // 试驾车辆id
+  uint64 car_id = 4;
+  // 试驾车辆所属store
+  uint64 store_id = 5;
+  // 试驾进行状态
+  uint32 status = 6;
+  // 试驾预约时间
+  uint64 appointment = 7;
+  // 试驾描述信息
+  string description = 8;
+}
