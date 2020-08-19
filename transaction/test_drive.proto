@@ -10,12 +10,7 @@ option go_package = "github.com/cargod-bj/b2c-staff-api/transaction/testDrive";
 service TestDrive {
   // 新增试驾
   rpc Add(TestDriveAddDto) returns (common.Response) {}
-  // 删除试驾
-  rpc Delete(TestDriveDeleteDto) returns (common.Response) {}
-  // 更新试驾
-  rpc Update(TestDriveUpdateDto) returns (common.Response) {}
-  // 获取试驾列表
-  rpc List(common.Page) returns (common.Response) {}
+
 }
 
 // 试驾入参对象

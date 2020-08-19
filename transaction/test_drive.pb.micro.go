@@ -46,12 +46,6 @@ func NewTestDriveEndpoints() []*api.Endpoint {
 type TestDriveService interface {
 	// 新增试驾
 	Add(ctx context.Context, in *TestDriveAddDto, opts ...client.CallOption) (*common.Response, error)
-	// 删除试驾
-	Delete(ctx context.Context, in *TestDriveDeleteDto, opts ...client.CallOption) (*common.Response, error)
-	// 更新试驾
-	Update(ctx context.Context, in *TestDriveUpdateDto, opts ...client.CallOption) (*common.Response, error)
-	// 获取试驾列表
-	List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error)
 }
 
 type testDriveService struct {
@@ -76,55 +70,16 @@ func (c *testDriveService) Add(ctx context.Context, in *TestDriveAddDto, opts ..
 	return out, nil
 }
 
-func (c *testDriveService) Delete(ctx context.Context, in *TestDriveDeleteDto, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "TestDrive.Delete", in)
-	out := new(common.Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *testDriveService) Update(ctx context.Context, in *TestDriveUpdateDto, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "TestDrive.Update", in)
-	out := new(common.Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *testDriveService) List(ctx context.Context, in *common.Page, opts ...client.CallOption) (*common.Response, error) {
-	req := c.c.NewRequest(c.name, "TestDrive.List", in)
-	out := new(common.Response)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Server API for TestDrive service
 
 type TestDriveHandler interface {
 	// 新增试驾
 	Add(context.Context, *TestDriveAddDto, *common.Response) error
-	// 删除试驾
-	Delete(context.Context, *TestDriveDeleteDto, *common.Response) error
-	// 更新试驾
-	Update(context.Context, *TestDriveUpdateDto, *common.Response) error
-	// 获取试驾列表
-	List(context.Context, *common.Page, *common.Response) error
 }
 
 func RegisterTestDriveHandler(s server.Server, hdlr TestDriveHandler, opts ...server.HandlerOption) error {
 	type testDrive interface {
 		Add(ctx context.Context, in *TestDriveAddDto, out *common.Response) error
-		Delete(ctx context.Context, in *TestDriveDeleteDto, out *common.Response) error
-		Update(ctx context.Context, in *TestDriveUpdateDto, out *common.Response) error
-		List(ctx context.Context, in *common.Page, out *common.Response) error
 	}
 	type TestDrive struct {
 		testDrive
@@ -139,16 +94,4 @@ type testDriveHandler struct {
 
 func (h *testDriveHandler) Add(ctx context.Context, in *TestDriveAddDto, out *common.Response) error {
 	return h.TestDriveHandler.Add(ctx, in, out)
-}
-
-func (h *testDriveHandler) Delete(ctx context.Context, in *TestDriveDeleteDto, out *common.Response) error {
-	return h.TestDriveHandler.Delete(ctx, in, out)
-}
-
-func (h *testDriveHandler) Update(ctx context.Context, in *TestDriveUpdateDto, out *common.Response) error {
-	return h.TestDriveHandler.Update(ctx, in, out)
-}
-
-func (h *testDriveHandler) List(ctx context.Context, in *common.Page, out *common.Response) error {
-	return h.TestDriveHandler.List(ctx, in, out)
 }
